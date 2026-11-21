@@ -9,17 +9,46 @@
   "type": "openai",
   "baseURL": "http://127.0.0.1:38765/v1",
   "server": {
-    "setup": ["sh", "setup.sh"],
-    "command": ["sh", "start.sh"],
-    "env": { "PORT": "38765" },
+    "setup": [
+      "sh",
+      "setup.sh"
+    ],
+    "command": [
+      "sh",
+      "start.sh"
+    ],
+    "env": {
+      "PORT": "38765"
+    },
     "ready": "http://127.0.0.1:38765/",
     "startupTimeout": 120
   },
-  "auth": { "type": "none" },
+  "auth": {
+    "type": "web",
+    "loginURL": "https://chat.qwen.ai/",
+    "domain": "qwen.ai",
+    "cookies": [
+      "token"
+    ],
+    "label": "Qwen account"
+  },
   "models": [
-    { "id": "qwen3-max", "context": 256000 },
-    { "id": "qwen3-coder-plus", "context": 1000000 }
+    {
+      "id": "qwen3.8-max",
+      "context": 1000000
+    },
+    {
+      "id": "qwen3.7-plus",
+      "context": 1000000
+    },
+    {
+      "id": "qwen3.7-max",
+      "context": 1000000
+    }
   ],
-  "capabilities": { "stop": false, "streamUsage": false },
+  "capabilities": {
+    "stop": false,
+    "streamUsage": false
+  },
   "free": true
 }

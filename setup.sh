@@ -1,5 +1,5 @@
 #!/bin/sh
-# One-time setup, run by Anvil from this folder: downloads qwen2api at a pinned commit and installs it.
+# One-time setup, run by Anvil from this folder: downloads qwen2api at a pinned commit, installs it and adds account-token support (patch v1).
 set -eu
 REPO="https://github.com/smanx/qwen2api.git"
 COMMIT="54f7993cbcb4a2dd5ae7210759fbe574a4c09f7a"
@@ -14,4 +14,5 @@ fi
 git -C upstream fetch --quiet origin "$COMMIT" 2>/dev/null || git -C upstream fetch --quiet origin
 git -C upstream checkout --quiet --force "$COMMIT"
 npm --prefix upstream install --omit=dev --ignore-scripts --no-audit --no-fund --loglevel=error
+node patch-core.cjs upstream/core.js
 echo "qwen2api ready at $(git -C upstream rev-parse --short HEAD)"

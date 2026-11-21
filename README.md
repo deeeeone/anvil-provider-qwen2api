@@ -10,7 +10,7 @@ In Anvil: **Settings → Provider → Add provider → From GitHub**, paste
 https://github.com/deeeeone/anvil-provider-qwen2api
 ```
 
-and confirm. Then pick a `qwen/…` model from the model menu.
+and confirm, then click **Sign in…** in its Settings row and sign in at chat.qwen.ai (or **Paste cookies**). Pick a `qwen/…` model afterwards. Guest mode still works on some networks, but Alibaba risk control now captchas it often.
 
 **Needs:** Node.js 18+ (`brew install node`) and git. Google Chrome (or Chromium, Brave, Edge) makes it much more reliable; without one it falls back to a weaker mode.
 
@@ -19,16 +19,16 @@ and confirm. Then pick a `qwen/…` model from the model menu.
 | Step | Where |
 |---|---|
 | First use: download qwen2api at a pinned commit into `upstream/` and `npm install` it | [`setup.sh`](setup.sh) |
-| Start the proxy on `127.0.0.1:38765`, only reachable from this Mac | [`start.sh`](start.sh), [`localhost-only.cjs`](localhost-only.cjs) |
+| Start the proxy on `127.0.0.1:38765`, only reachable from this Mac, and give it your `token` cookie | [`start.sh`](start.sh), [`localhost-only.cjs`](localhost-only.cjs) |
 | Tell Anvil where it is and which models it has | [`anvil-provider.json`](anvil-provider.json) |
 
-Your prompts go from Anvil to the proxy on your Mac, and from there to chat.qwen.ai. Nothing else is involved. The setup log is in the plugin folder (`.anvil-server.log`); Settings links to it.
+Your prompts go from Anvil to the proxy on your Mac, and from there to chat.qwen.ai. The plugin hands your `token` cookie to qwen2api through `start.sh`, which switches its requests from guest mode to your account. Nothing else is involved. The setup log is in the plugin folder (`.anvil-server.log`); Settings links to it.
 
-Models are listed live from the proxy once it runs. `qwen3-max` and `qwen3-coder-plus` are shown before that.
+Models are listed live from the proxy once it runs. `qwen3.8-max` and `qwen3.7-plus` are shown before that.
 
 ## Good to know
 
-- This uses Qwen Chat's website through an unofficial proxy, not Alibaba's paid API. It can break when the site changes, and it may go against Qwen Chat's terms. Use it on an account you're prepared to risk.
+- This uses Qwen Chat's website through an unofficial proxy, not Alibaba's paid API. It can break when the site changes, and it may go against Qwen Chat's terms. Use it on an account you're prepared to risk. A guest or signed-out request is often captcha-blocked (`RGV587`); sign in if replies fail.
 - qwen2api is third-party code with no license file, so this plugin doesn't copy it: `setup.sh` downloads it from GitHub on your Mac. To update, bump `COMMIT` in `setup.sh`; Anvil reruns setup automatically when that file changes.
 - To use a copy you host yourself (Docker, Hugging Face…), see qwen2api's README and add an [`openai` plugin](https://github.com/deeeeone/Anvil/blob/main/docs/PROVIDERS.md) pointing at it.
 
