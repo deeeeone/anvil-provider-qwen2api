@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/deeeeone/Anvil/main/docs/anvil-provider.schema.json",
+  "spec": 1,
+  "id": "qwen",
+  "name": "Qwen Chat (on device)",
+  "description": "Qwen models from chat.qwen.ai, free, through qwen2api running on this Mac.",
+  "symbol": "q.circle",
+  "homepage": "https://github.com/deeeeone/anvil-provider-qwen2api",
+  "type": "openai",
+  "baseURL": "http://127.0.0.1:38765/v1",
+  "server": {
+    "setup": ["sh", "setup.sh"],
+    "command": ["sh", "start.sh"],
+    "env": { "PORT": "38765" },
+    "ready": "http://127.0.0.1:38765/",
+    "startupTimeout": 120
+  },
+  "auth": { "type": "none" },
+  "models": [
+    { "id": "qwen3-max", "context": 256000 },
+    { "id": "qwen3-coder-plus", "context": 1000000 }
+  ],
+  "capabilities": { "stop": false, "streamUsage": false },
+  "free": true
+}
